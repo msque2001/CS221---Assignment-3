@@ -33,7 +33,7 @@ class Dictionary
 
     void addWord(string word)
     {
-        Node *tempNode = head;
+        Node* tempNode = head;
         word += WORD_END; // Adding $ at the end of each word
 
         for (int i = 0; word[i] != '\0'; i++)
@@ -42,10 +42,10 @@ class Dictionary
             {
                 if (tempNode->children[j] == NULL)
                 {
-                        tempNode->children[j] = new Node;
-                        tempNode->children[j]->character = word[i];
-                        tempNode = tempNode->children[j];
-                        break;
+                    tempNode->children[j] = new Node;
+                    tempNode->children[j]->character = word[i];
+                    tempNode = tempNode->children[j];
+                    break;
                 }
                 else if (tempNode->children[j]->character == word[i])
                 {
@@ -102,79 +102,79 @@ public:
 
         if (tempNode)
         {
-            
+
             return true;
         }
         else
         {
-            
+
             return false;
 
         }
-        }
+    }
 
 };
-
+ofstream fout;
 Dictionary theDict;
+
+
 
 
 void horizontal_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);
+    
     string possible_word;
-    bool word=false;
+    bool word = false;
     int start[2];
     int end[2];
-   
+
     fout << "\nHORIZONTAL FORWARD WORDS: \n";
     for (int i = 0;i < ROW;i++)
     {
-        for (int j = 0;j < Column-1;j++)
+        for (int j = 0;j < Column - 1;j++)
         {
-            start[1] = j+1;
-            start[0] = i+1;
+            start[1] = j + 1;
+            start[0] = i + 1;
             possible_word = array[i][j];  //makes all possible combination of words horizontally and checks if it is sored in tries
-            for (int k = j+1;k < Column-1;k++)
+            for (int k = j + 1;k < Column - 1;k++)
             {
-                
+
                 possible_word = possible_word + array[i][k];
-                end[1] = k+1;
-                end[0] = i+1;
-                word=theDict.search(possible_word);
+                end[1] = k + 1;
+                end[0] = i + 1;
+                word = theDict.search(possible_word);
                 if (word)
                 {
-                 
+
                     fout << endl << possible_word << "(" << start[0] << "," << start[1] << ") (" << end[0] << "," << end[1] << ")";
                 }
 
 
             }
-            
-            
+
+
         }
 
     }
-    fout.close();
+   
 }
 
 void reverse_horizontal_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);      //opens file
-    string possible_word;                
+       
+    string possible_word;
     bool word = false;
     int start[2];                             //start and end position stored here
     int end[2];
     fout << "\nHORIZONTAL BACKWARDS WORDS: \n";
     for (int i = 0;i < ROW;i++)
     {
-        for (int j = Column-2;j >=0 ;j--)
+        for (int j = Column - 2;j >= 0;j--)
         {
             start[1] = j + 1;
             start[0] = i + 1;
             possible_word = array[i][j];
-            for (int k = j-1;k >= 0;k--)
+            for (int k = j - 1;k >= 0;k--)
             {
 
                 possible_word = possible_word + array[i][k];                         //makes all possible words
@@ -192,19 +192,18 @@ void reverse_horizontal_words(char array[ROW][Column])
 
         }
     }
-    fout.close();
+   
 }
 
 void vertical_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);
+   
     string possible_word;
     bool word = false;                          //makes all possible combination of words vertically and checks if it is sored in tries
     int start[2];
     int end[2];
     fout << "\nVERTICAL FORWARD WORDS: \n";
-    for (int j = 0;j < Column-1;j++)
+    for (int j = 0;j < Column - 1;j++)
     {
         for (int i = 0;i < ROW;i++)
         {
@@ -224,29 +223,28 @@ void vertical_words(char array[ROW][Column])
             }
         }
     }
-    fout.close();
+    
 }
 void reverse_vertical_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);
+    
     string possible_word;
     bool word = false;
     int start[2];
     int end[2];
     fout << "\nVERTICAL REVERSE WORDS: \n";
-    for (int j = 0;j < Column-1;j++)                        //makes all possible combination of words vertically backwards and checks if it is sored in tries
+    for (int j = 0;j < Column - 1;j++)                        //makes all possible combination of words vertically backwards and checks if it is sored in tries
     {
-        for (int i = ROW-1;i >= 0;i--)
+        for (int i = ROW - 1;i >= 0;i--)
         {
             start[1] = j + 1;
             start[0] = i + 1;
             possible_word = array[i][j];
-            for (int k = i-1 ;k >=0 ; k--)
+            for (int k = i - 1;k >= 0; k--)
             {
                 possible_word = possible_word + array[k][j];
                 end[1] = start[1];
-                end[0] = k+1;
+                end[0] = k + 1;
                 word = theDict.search(possible_word);
                 if (word)
                 {
@@ -255,13 +253,12 @@ void reverse_vertical_words(char array[ROW][Column])
             }
         }
     }
-    fout.close();
+   
 }
 
 void right_diagnol_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);
+    
     string possible_word;
     string reverse;
     bool word = false;
@@ -275,9 +272,9 @@ void right_diagnol_words(char array[ROW][Column])
             start[1] = j + 1;
             start[0] = i + 1;
             possible_word = array[i][j];
-            for (int k = j+1, l=i+1 ;k < Column-1 && l < ROW;k++,l++)
+            for (int k = j + 1, l = i + 1;k < Column - 1 && l < ROW;k++, l++)
             {
-                
+
                 possible_word = possible_word + array[l][k];
                 end[1] = k + 1;
                 end[0] = l + 1;
@@ -293,13 +290,12 @@ void right_diagnol_words(char array[ROW][Column])
 
         }
     }
-    fout.close();
+    
 }
 
 void reverse_right_diagnol_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);
+ 
     string possible_word;
     string reverse;
     bool word = false;
@@ -308,12 +304,12 @@ void reverse_right_diagnol_words(char array[ROW][Column])
     fout << "\nRIGHT DIAGNOL REVERSE WORDS: \n";                             //makes all possible combination of words diagnolly rightwards in backward direction and checks if it is sored in tries
     for (int i = ROW;i >= 0;i--)
     {
-        for (int j = Column-1;j >=0;j--)
+        for (int j = Column - 1;j >= 0;j--)
         {
             start[1] = j + 1;
             start[0] = i + 1;
             possible_word = array[i][j];
-            for (int k = j - 1, l = i - 1;k >= 0 && l >=0;k--, l--)
+            for (int k = j - 1, l = i - 1;k >= 0 && l >= 0;k--, l--)
             {
 
                 possible_word = possible_word + array[l][k];
@@ -331,14 +327,13 @@ void reverse_right_diagnol_words(char array[ROW][Column])
 
         }
     }
-    fout.close();
+   
 }
 
 
 void left_diagnol_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);
+    
     string possible_word;
     string reverse;
     bool word = false;
@@ -347,7 +342,7 @@ void left_diagnol_words(char array[ROW][Column])
     fout << "\nLEFT DIAGNOL FORWARD WORDS: \n";
     for (int i = 0;i < ROW;i++)                                                  //makes all possible combination of words diagnolly in left direction and checks if it is sored in tries
     {
-        for (int j = Column-2;j >= 0;j--)
+        for (int j = Column - 2;j >= 0;j--)
         {
             start[1] = j + 1;
             start[0] = i + 1;
@@ -370,28 +365,27 @@ void left_diagnol_words(char array[ROW][Column])
 
         }
     }
-    fout.close();
+    
 }
 
 
 void reverse_left_diagnol_words(char array[ROW][Column])
 {
-    ofstream fout;
-    fout.open("word_found.txt", ios::app);
+    
     string possible_word;
     string reverse;
     bool word = false;
     int start[2];
     int end[2];
     fout << "\nLEFT DIAGNOL REVERSE WORDS: \n";
-    for (int i = ROW-1;i >=0;i--)                                                  //makes all possible combination of words diagnolly in left direction backwards and checks if it is sored in tries
+    for (int i = ROW - 1;i >= 0;i--)                                                  //makes all possible combination of words diagnolly in left direction backwards and checks if it is sored in tries
     {
-        for (int j = 0;j <Column-1;j++)
+        for (int j = 0;j < Column - 1;j++)
         {
             start[1] = j + 1;
             start[0] = i + 1;
             possible_word = array[i][j];
-            for (int k = j + 1, l = i - 1;k < Column-1 && l >= 0;k++, l--)
+            for (int k = j + 1, l = i - 1;k < Column - 1 && l >= 0;k++, l--)
             {
 
                 possible_word = possible_word + array[l][k];
@@ -409,38 +403,39 @@ void reverse_left_diagnol_words(char array[ROW][Column])
 
         }
     }
-    fout.close();
+    
 }
 
 
 int main()
 {
     // char array[ROW][Column] = {"godxxxxxbcat","txxxapplexxx","baxxxpuxlxxx","lxcxxeedxape","agoodxoxxxbu","cxxxxoxxxxxl","kxxxgxxkcalb"};//array declared
-    char array[ROW][Column] = {"dogxbxxxnoon","rhellotherex","okciuqbrownm","wxwgexlxhjij","oozokvuxdrow","lxdrxextxja","drowblonkgod"};//array declared
+    char array[ROW][Column] = { "dogxbxxxnoon","rhellotherex","opciutbrownm","axwaeadxhjij","oozolcuodrow","lxdlxextgjax","drowblonkgod" };//array declared
     cout << "\nThe array is:\n";
     for (int i = 0;i < ROW;i++)
     {
         for (int j = 0;j < Column;j++)    //displays the hard coded array
         {
-            cout<< array[i][j];
+            cout << array[i][j];
 
         }
         cout << endl;
     }
+    fout.open("word_found.txt");
 
- 
     theDict.dict_init();   //function call for storing all the data of text file in tries
     horizontal_words(array);      //function call for searchig horizontal
     reverse_horizontal_words(array);
     vertical_words(array);          //function call for searching vertical
     reverse_vertical_words(array);
     right_diagnol_words(array);         //function call for searching diagnol
-    reverse_right_diagnol_words(array);  
+    reverse_right_diagnol_words(array);
     left_diagnol_words(array);
     reverse_left_diagnol_words(array);
     cout << "\n ALL POSSIBLE WORDS STORED IN TEXT FILE!!!!\n";
-   
 
+    fout.close();
 
     return 0;
 }
+
