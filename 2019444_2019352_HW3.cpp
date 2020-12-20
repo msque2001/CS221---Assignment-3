@@ -13,7 +13,7 @@ using namespace std;
 
 
 
-#define SIZE 10
+#define SIZE 27
 #define ROW 7             //row size defined to 7
 #define Column 13        //column size defined to 12, 13 is /0 in string
 #define WORD_END '$'
@@ -31,6 +31,32 @@ class Dictionary
         Node() : children() {}
     }*head;
 
+    void addWord(string word)
+    {
+        Node *tempNode = head;
+        word += WORD_END; // Adding $ at the end of each word
+
+        for (int i = 0; word[i] != '\0'; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                if (tempNode->children[j] == NULL)
+                {
+                        tempNode->children[j] = new Node;
+                        tempNode->children[j]->character = word[i];
+                        tempNode = tempNode->children[j];
+                        break;
+                }
+                else if (tempNode->children[j]->character == word[i])
+                {
+                    tempNode = tempNode->children[j];
+                    break;
+                }
+
+            }
+        }
+    }
+
 public:
     Dictionary()
     {
@@ -40,35 +66,13 @@ public:
 
     void dict_init()
     {
-        Node* tempNode;
         ifstream file(INPUT_FILE);
         string word;
 
         while (!file.eof())
         {
-            tempNode = head;
             file >> word;
-            word += WORD_END; // Adding $ at the end of each word
-
-            for (int i = 0; word[i] != '\0'; i++)
-            {
-                for (int j = 0; j < SIZE; j++)
-                {
-                    if (tempNode->children[j] == NULL)
-                    {
-                         tempNode->children[j] = new Node;
-                         tempNode->children[j]->character = word[i];
-                         tempNode = tempNode->children[j];
-                         break;
-                    }
-                    else if (tempNode->children[j]->character == word[i])
-                    {
-                        tempNode = tempNode->children[j];
-                        break;
-                    }
-
-                }
-            }
+            addWord(word);
         }
 
         file.close();
@@ -93,11 +97,6 @@ public:
                     index++;
                     break;
                 }
-                /* else if(((tempNode->children[i]->character == WORD_END) && (word[index] == '\0')))
-                 {
-                     tempNode = tempNode->children[i];
-                     break;
-                 }*/ 
             }
         }
 
@@ -135,7 +134,7 @@ void horizontal_words(char array[ROW][Column])
         {
             start[1] = j+1;
             start[0] = i+1;
-            possible_word = array[i][j];                        //makes all possible combination of words horizontally and checks if it is sored in tries
+            possible_word = array[i][j];  //makes all possible combination of words horizontally and checks if it is sored in tries
             for (int k = j+1;k < Column-1;k++)
             {
                 
@@ -416,8 +415,8 @@ void reverse_left_diagnol_words(char array[ROW][Column])
 
 int main()
 {
-    char array[ROW][Column] = {"godxxxxxbcat","txxxapplexxx","baxxxpuxlxxx","lxcxxeedxape","agoodxoxxxbu","cxxxxoxxxxxl","kxxxgxxkcalb"};//array declared
-
+    // char array[ROW][Column] = {"godxxxxxbcat","txxxapplexxx","baxxxpuxlxxx","lxcxxeedxape","agoodxoxxxbu","cxxxxoxxxxxl","kxxxgxxkcalb"};//array declared
+    char array[ROW][Column] = {"dogxbxxxnoon","rhellotherex","okciuqbrownm","wxwgexlxhjij","oozokvuxdrow","lxdrxextxja","drowblonkgod"};//array declared
     cout << "\nThe array is:\n";
     for (int i = 0;i < ROW;i++)
     {

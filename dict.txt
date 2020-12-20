@@ -7,3 +7,12 @@ good
 cat
 dog
 god
+moon
+noon
+word
+hello
+there
+row
+brown
+zoo
+here
